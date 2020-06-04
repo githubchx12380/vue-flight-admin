@@ -24,6 +24,8 @@ const mutations = {
     state.avatar = avatar
   },
   SET_ROLES: (state, roles) => {
+    console.log(roles);
+    
     state.roles = roles
   }
 }
@@ -49,22 +51,21 @@ const actions = {
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
       getInfo(state.token).then(response => {
-        console.log(response);
         
-        const { data } = response
+        const { data } = response.data
 
         if (!data) {
           reject('Verification failed, please Login again.')
         }
-
+        console.log(data);
+        
         const { roles, name, avatar, introduction } = data
-        console.log(roles);
         
         // roles must be a non-empty array
         if (!roles || roles.length <= 0) {
           reject('getInfo: roles must be a non-null array!')
         }
-
+        
         commit('SET_ROLES', roles)
         commit('SET_NAME', name)
         commit('SET_AVATAR', avatar)
