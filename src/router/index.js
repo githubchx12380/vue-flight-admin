@@ -90,7 +90,7 @@ export const constantRoutes = [
     name:'flight',
     meta:{
       title:'飞机票管理',
-      ico:'international'
+      icon:'international'
     },
     children:[
       {
