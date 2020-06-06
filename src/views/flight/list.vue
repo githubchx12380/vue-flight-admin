@@ -196,7 +196,7 @@ export default {
     },
     //到达
     arrChange(val) {
-
+      
     },
     //获取航班数据
     getList() {
