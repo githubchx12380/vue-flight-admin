@@ -104,7 +104,15 @@ export const constantRoutes = [
         component:() => import('@/views/flight/index'),
         name:'add',
         meta:{title:'添加航班'}
-      }
+      },
+      {
+        path:'addair/:id',
+        component:() => import('@/views/flight/index'),
+        name:'edit',
+        meta:{title:'编辑航班'},
+        hidden: true
+      },
+     
     ]
   },
   {

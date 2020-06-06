@@ -39,3 +39,20 @@ export function insert_flight(data) {
   })
 }
 
+//查询单个航班
+export function select_flightitem(id) {
+  return request({
+    method:'get',
+    url:'/air/select_flightitem/' + id,
+  })
+}
+
+//修改航班信息
+export function edit_flight(id,data) {
+  return request({
+    method:'post',
+    url:'/air/edit_flightitem/' + id,
+    data
+  })
+}
+

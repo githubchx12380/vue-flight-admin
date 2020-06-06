@@ -154,8 +154,11 @@ export default {
   methods: {
     //编辑按钮点击
     handleEdit(scope,row) {
+      if(!this.$store.state.user.roles.includes('admin')) {
+        this.$message.error('抱歉,您的权限不够!')
+        return
+      }
       this.$router.push(`/flight/addair/${row.air_ticket_id}`)
-      
     },
     //删除按钮点击
     handleDelete(scope,row) {

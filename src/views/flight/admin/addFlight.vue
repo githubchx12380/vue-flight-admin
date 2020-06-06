@@ -1,6 +1,6 @@
 <template>
   <div class="add-flight">
-      <h1 style="text-align:center">新建航班</h1>
+      <h1 style="text-align:center">{{$route.params.id ? '编辑' : '新建'}}航班</h1>
       <el-form>
         <el-form-item label="航班号:" label-width="70px">
           <el-input v-model="model.airCode"></el-input>
@@ -136,7 +136,7 @@
 </template>
 
 <script>
-import { CityList,insert_flight } from '@/api/flight'
+import { CityList,insert_flight,select_flightitem,edit_flight } from '@/api/flight'
 export default {
   data() {
     return {
@@ -162,24 +162,6 @@ export default {
       model:{
 
       },
-      options:[{
-         value: 'zhinan',
-          label: '指南',
-
-          children: [{
-              value: 'yizhi',
-              label: '一致'
-            }, {
-              value: 'fankui',
-              label: '反馈'
-            }, {
-              value: 'xiaolv',
-              label: '效率'
-            }, {
-              value: 'kekong',
-              label: '可控'
-            }]
-      }]
     }
   },
   computed:{
@@ -239,19 +221,43 @@ export default {
     },
     //提交
     submitFlight() {
-      insert_flight(this.model).then(res => {
-        if(res.data.code == 200) {
-          
-          this.$message.success(res.data.msg)
-          this.$router.push('/flight/list')
+       if(this.$route.params.id) {
+          edit_flight(this.$route.params.id,this.model).then(res => {
+            if(res.data.code == 200) {    
+              this.$message.success(res.data.msg)
+              this.$router.push('/flight/list')
+              return
+            }
+          })
           return
+       }
+        insert_flight(this.model).then(res => {
+        if(res.data.code == 200) {    
+            this.$message.success(res.data.msg)
+            this.$router.push('/flight/list')
+            return
         }
-        this.$message(res.data.msg)
+          this.$message(res.data.msg)
+         
+  
       })
-    }
+    },
+    getData(id) {
+      select_flightitem(id).then(res => {
+        this.model = res.data.data[0]
+        this.need = res.data.data[0].flightTime
+        this.depdates = this.model.depDate + ' ' + this.model.depTime
+        this.arrdates = this.model.arrDate + ' ' + this.model.arrTime
+      })
+    },
   },
+  //编辑页面获取数据
+ 
   created() {
     this.citylist()
+    if(this.$route.params.id) {
+      this.getData(this.$route.params.id)
+    }
   },
 }
 </script>
