@@ -19,4 +19,23 @@ export function flight_list(params) {
   })
 }
 
+//删除航班
+export function delete_flight(id) {
+  return request({
+    url:'/air/deleteflight',
+    method:'post',
+    data:{
+      id
+    }
+  })
+}
+
+//新增航班
+export function insert_flight(data) {
+  return request({
+    method:'post',
+    url:'/air/insetflight',
+    data
+  })
+}
 

@@ -104,7 +104,7 @@
 </template>
 
 <script>
-import { CityList,flight_list } from '@/api/flight'
+import { CityList,flight_list,delete_flight } from '@/api/flight'
 import waves from '@/directive/waves' // waves directive
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
 
@@ -154,7 +154,8 @@ export default {
   methods: {
     //编辑按钮点击
     handleEdit(scope,row) {
-
+      this.$router.push(`/flight/addair/${row.air_ticket_id}`)
+      
     },
     //删除按钮点击
     handleDelete(scope,row) {
@@ -163,7 +164,12 @@ export default {
         return
       }
       
-      
+      delete_flight(row.air_ticket_id).then(res => {
+        if(res.data.code == 200) {
+          this.$message.success(res.data.msg)
+          this.getList()
+        }
+      })
     },
     //翻页
     handleSizeChange(val) {
@@ -194,6 +200,7 @@ export default {
       this.listLoading = true
       flight_list(this.model).then(res => {
         this.total = res.data.len
+        console.log(res.data.data);
         
         this.tableData = res.data.data
         setTimeout(() => {
