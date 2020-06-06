@@ -111,7 +111,7 @@
           </el-col>
           <el-col :span="8">
              <el-form-item label="飞机类型" label-width="110px">
-               <el-select v-model="model.planFullType" placeholder="请选择">
+               <el-select v-model="model.planeFullType" placeholder="请选择">
                   <el-option
                     v-for="item in planFullTypeopt"
                     :key="item.value"
@@ -240,7 +240,13 @@ export default {
     //提交
     submitFlight() {
       insert_flight(this.model).then(res => {
-        
+        if(res.data.code == 200) {
+          
+          this.$message.success(res.data.msg)
+          this.$router.push('/flight/list')
+          return
+        }
+        this.$message(res.data.msg)
       })
     }
   },
