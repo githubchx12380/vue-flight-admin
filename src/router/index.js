@@ -86,7 +86,6 @@ export const constantRoutes = [
   {
     path:'/flight',
     component:Layout,
-    redirect:'noRedirect',
     name:'flight',
     meta:{
       title:'飞机票管理',
@@ -113,6 +112,26 @@ export const constantRoutes = [
         hidden: true
       },
      
+    ]
+  },
+  {
+    path:'/order',
+    component:Layout,
+    name:'order',
+    meta:{
+      title:'订单管理',
+      icon:'component'
+    },
+    alwaysShow: true,
+
+    children:[
+      {
+        path:'list',
+        component:() => import('@/views/order/index'),
+        name:'orderlist',
+        meta:{title:'订单列表'}
+      },
+      
     ]
   },
   {

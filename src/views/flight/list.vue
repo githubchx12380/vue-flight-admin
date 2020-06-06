@@ -25,7 +25,7 @@
       </el-button>
     </div>
 
-       <el-table
+    <el-table
       v-loading="listLoading"
       :data="tableData"
       style="width: 100%">
