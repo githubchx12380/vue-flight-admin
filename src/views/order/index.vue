@@ -1,5 +1,10 @@
 <template>
   <div class="ordet-box">
+    <el-radio-group v-model="radio">
+      <el-radio :label="1">全部订单</el-radio>
+      <el-radio :label="2">已支付订单</el-radio>
+      <el-radio :label="3">未支付订单</el-radio>
+    </el-radio-group>
        <el-table
       v-loading="listLoading"
       :data="orderList"
@@ -91,6 +96,7 @@ import { get_OrderData } from '@/api/order'
 export default {
     data() {
         return {
+            radio: 1,
             currentArr:[],
             drawer:false,
             listLoading:true,
@@ -98,9 +104,9 @@ export default {
         }
     },
     methods:{
-        getOrderData() {
+        getOrderData(state) {
             this.listLoading = true
-            get_OrderData().then(res => {
+            get_OrderData(state).then(res => {
                 this.orderList = [...res.data.data]
                 setTimeout(() => {
                     this.listLoading = false
@@ -143,6 +149,11 @@ export default {
     },
     created() {
         this.getOrderData()
+    },
+    watch:{
+      radio(){
+        this.getOrderData(this.radio)
+      }
     }
 }
 </script>
