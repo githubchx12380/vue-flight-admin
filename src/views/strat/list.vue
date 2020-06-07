@@ -1,29 +1,33 @@
 <template>
-  <div class="strat_parent">
-    <el-row>
-      <el-col :span="12">
-        <div class="item_col" v-for="item in list" :key="item.strat_id">
-          <el-card class="box-card">
-            <div slot="header" class="clearfix">
-              <span>{{item.title.substring(1,25)}}...</span>
-              <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
-            </div>
-            <div v-html="item.content"></div>
-          </el-card>
-        </div>
-      </el-col>
-      <el-col :span="12">
-        <div class="item_col" v-for="item in listright" :key="item.strat_id">
-          <el-card class="box-card">
-            <div slot="header" class="clearfix">
-              <span>{{item.title.substring(1,25)}}...</span>
-              <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
-            </div>
-            <div v-html="item.content"></div>
-          </el-card>
-        </div>
-      </el-col>
-    </el-row>
+  <div>
+    <div class="strat_parent">
+      <el-row>
+        <el-col :span="12">
+          <div class="item_col" v-for="item in list" :key="item.strat_id">
+            <el-card class="box-card">
+              <div slot="header" class="clearfix">
+                <span>{{item.title.substring(1,25)}}...</span>
+                <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
+              </div>
+              <div v-html="item.content"></div>
+            </el-card>
+          </div>
+        </el-col>
+        <el-col :span="12">
+          <div class="item_col" v-for="item in listright" :key="item.strat_id">
+            <el-card class="box-card">
+              <div slot="header" class="clearfix">
+                <span>{{item.title.substring(1,25)}}...</span>
+                <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
+              </div>
+              <div v-html="item.content"></div>
+            </el-card>
+          </div>
+        </el-col>
+      </el-row>
+    </div>
+    <div class="getdata"><el-button round @click="handleGetData">加载更多</el-button></div>
+    
   </div>
 </template>
 
@@ -37,18 +41,25 @@ export default {
         pagesize: 2
       },
       list: [],
-      listright:[],
+      listright: []
     };
   },
   methods: {
     get_stratlist() {
       strat_list(this.pages).then(res => {
-        this.list = res.data.data;
+        this.list.push(...res.data.data);
       });
-      strat_list({page:this.pages.page + 1,pagesize:this.pages.pagesize}).then(res => {
-        this.listright = res.data.data;
+      strat_list({
+        page: this.pages.page + 1,
+        pagesize: this.pages.pagesize
+      }).then(res => {
+        this.listright.push(...res.data.data);
       });
     },
+    handleGetData() {
+        this.pages.page += 1
+        this.get_stratlist()
+    }
   },
   created() {
     this.get_stratlist();
@@ -78,13 +89,20 @@ export default {
 .clearfix:after {
   clear: both;
 }
-/deep/ .el-card__body{
-    overflow: hidden;
-    padding: 0;
+/deep/ .el-card__body {
+  overflow: hidden;
+  padding: 0;
 }
- .box-card {
-    padding: 0 10px;
-    overflow: hidden;
+.box-card {
+  padding: 0 10px;
+  overflow: hidden;
   width: 80%;
+}
+.getdata{
+    width: 250px;
+    margin: 0 auto 50px;
+    /deep/ .el-button--medium{
+        width: 100%;
+    }
 }
 </style>
