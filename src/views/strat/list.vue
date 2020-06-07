@@ -26,7 +26,7 @@
         </el-col>
       </el-row>
     </div>
-    <div class="getdata"><el-button round @click="handleGetData">加载更多</el-button></div>
+    <div class="getdata"><el-button :loading="loading" round @click="handleGetData">加载更多</el-button></div>
     
   </div>
 </template>
@@ -36,6 +36,7 @@ import { strat_list } from "@/api/strat";
 export default {
   data() {
     return {
+      loading:false,
       pages: {
         page: 1,
         pagesize: 2
@@ -58,7 +59,11 @@ export default {
     },
     handleGetData() {
         this.pages.page += 1
-        this.get_stratlist()
+        this.loading = true
+        setTimeout(() => {
+            this.get_stratlist()
+            this.loading = false
+        },1000)
     }
   },
   created() {
