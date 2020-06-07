@@ -1,10 +1,12 @@
 <template>
   <div class="ordet-box">
-    <el-radio-group v-model="radio">
-      <el-radio :label="1">全部订单</el-radio>
-      <el-radio :label="2">已支付订单</el-radio>
-      <el-radio :label="3">未支付订单</el-radio>
-    </el-radio-group>
+    <div class="filter_order">
+      <el-radio-group v-model="radio">
+        <el-radio :label="1">全部订单</el-radio>
+        <el-radio :label="2">已支付订单</el-radio>
+        <el-radio :label="3">未支付订单</el-radio>
+      </el-radio-group>
+    </div>
        <el-table
       v-loading="listLoading"
       :data="orderList"
@@ -150,6 +152,7 @@ export default {
     created() {
         this.getOrderData()
     },
+    //全部订单状态
     watch:{
       radio(){
         this.getOrderData(this.radio)
@@ -159,6 +162,9 @@ export default {
 </script>
 
 <style scoped>
+.filter_order{
+  padding: 0px 20px 10px 20px;
+}
 .ordet-box{
    padding: 20px 10px;
 }

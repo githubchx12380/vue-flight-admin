@@ -88,7 +88,7 @@ export const constantRoutes = [
     component:Layout,
     name:'flight',
     meta:{
-      title:'飞机票管理',
+      title:'机票管理',
       icon:'international'
     },
     children:[
@@ -134,6 +134,85 @@ export const constantRoutes = [
       
     ]
   },
+  {
+    path:'/vacation',
+    component:Layout,
+    redirect: 'noRedirect',
+    name:'vacation',
+    meta:{
+      title:'假期展示',
+      icon:'example',
+    },
+    children:[
+      {
+        path:'list',
+        component:() => import('@/views/vacation'),
+        name:'vacationlist',
+        meta:{title:'假期出行'}
+      }
+    ]
+  },
+  {
+    path:'/strat',
+    component:Layout,
+    redirect:'noRedirect',
+    name:'美食专区',
+    meta:{
+      title:'美食推荐',
+      icon:'people',
+    },
+    children:[
+      {
+        path:'/list',
+        component:() => import('@/views/strat/list'),
+        name:'stratlist',
+        meta:{
+          title:'文章列表'
+        }
+      },
+      {
+        path:'/list',
+        component:() => import('@/views/strat/list'),
+        name:'stratlist',
+        meta:{
+          title:'新增文章'
+        }
+      }
+    ]
+  },
+  {
+    path: '/permission',
+    component: Layout,
+    redirect: '/permission/page',
+    alwaysShow: true, // will always show the root menu
+    name: 'Permission',
+    meta: {
+      title: '权限管理',
+      icon: 'lock',
+      roles: ['admin'] // you can set roles in root nav
+    },
+    children: [
+      {
+        path: 'page',
+        component: () => import('@/views/permission/page'),
+        name: 'PagePermission',
+        meta: {
+          title: '管理员列表',
+          roles: ['admin'] // or you can only set roles in sub nav
+        }
+      },
+      {
+        path: 'role',
+        component: () => import('@/views/permission/role'),
+        name: 'RolePermission',
+        meta: {
+          title: '添加管理员',
+          roles: ['admin']
+        }
+      }
+    ]
+  },
+ 
   {
     path: '/profile',
     component: Layout,
@@ -341,38 +420,6 @@ export const asyncRoutes = [
         component: () => import('@/views/theme/index'),
         name: 'Theme',
         meta: { title: 'Theme', icon: 'theme' }
-      }
-    ]
-  },
-  {
-    path: '/permission',
-    component: Layout,
-    redirect: '/permission/page',
-    alwaysShow: true, // will always show the root menu
-    name: 'Permission',
-    meta: {
-      title: '权限管理',
-      icon: 'lock',
-      roles: ['admin'] // you can set roles in root nav
-    },
-    children: [
-      {
-        path: 'page',
-        component: () => import('@/views/permission/page'),
-        name: 'PagePermission',
-        meta: {
-          title: '管理员列表',
-          roles: ['admin'] // or you can only set roles in sub nav
-        }
-      },
-      {
-        path: 'role',
-        component: () => import('@/views/permission/role'),
-        name: 'RolePermission',
-        meta: {
-          title: '添加管理员',
-          roles: ['admin']
-        }
       }
     ]
   },
