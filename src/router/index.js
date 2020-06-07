@@ -163,7 +163,7 @@ export const constantRoutes = [
     },
     children:[
       {
-        path:'/list',
+        path:'list',
         component:() => import('@/views/strat/list'),
         name:'stratlist',
         meta:{
@@ -171,9 +171,9 @@ export const constantRoutes = [
         }
       },
       {
-        path:'/list',
-        component:() => import('@/views/strat/list'),
-        name:'stratlist',
+        path:'add',
+        component:() => import('@/views/strat/index'),
+        name:'stratadd',
         meta:{
           title:'新增文章'
         }
