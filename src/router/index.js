@@ -181,38 +181,25 @@ export const constantRoutes = [
     ]
   },
   {
-    path: '/permission',
-    component: Layout,
-    redirect: '/permission/page',
-    alwaysShow: true, // will always show the root menu
-    name: 'Permission',
-    meta: {
-      title: '权限管理',
-      icon: 'lock',
-      roles: ['admin'] // you can set roles in root nav
+    path:'/web_user',
+    component:Layout,
+    redirect:'noRedirect',
+    name:'web_user',
+    meta:{
+      title:'前台用户',
+      icon:'component'
     },
-    children: [
+    children:[
       {
-        path: 'page',
-        component: () => import('@/views/permission/page'),
-        name: 'PagePermission',
-        meta: {
-          title: '管理员列表',
-          roles: ['admin'] // or you can only set roles in sub nav
-        }
-      },
-      {
-        path: 'role',
-        component: () => import('@/views/permission/role'),
-        name: 'RolePermission',
-        meta: {
-          title: '添加管理员',
-          roles: ['admin']
+        path:'list',
+        component:() => import('@/views/user/list'),
+        meta:{
+          title:'用户列表',
+          name:'user_list'
         }
       }
     ]
   },
- 
   {
     path: '/profile',
     component: Layout,
@@ -420,6 +407,38 @@ export const asyncRoutes = [
         component: () => import('@/views/theme/index'),
         name: 'Theme',
         meta: { title: 'Theme', icon: 'theme' }
+      }
+    ]
+  },
+  {
+    path: '/permission',
+    component: Layout,
+    redirect: '/permission/page',
+    alwaysShow: true, // will always show the root menu
+    name: 'Permission',
+    meta: {
+      title: '权限管理',
+      icon: 'lock',
+      roles: ['admin'] // you can set roles in root nav
+    },
+    children: [
+      {
+        path: 'page',
+        component: () => import('@/views/permission/page'),
+        name: 'PagePermission',
+        meta: {
+          title: '管理员列表',
+          roles: ['admin'] // or you can only set roles in sub nav
+        }
+      },
+      {
+        path: 'role',
+        component: () => import('@/views/permission/role'),
+        name: 'RolePermission',
+        meta: {
+          title: '添加管理员',
+          roles: ['admin']
+        }
       }
     ]
   },
