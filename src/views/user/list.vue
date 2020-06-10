@@ -15,7 +15,7 @@
         width="150">
          <template slot-scope="scope">
 					<div>
-            {{scope.row.name? scope.row.name : '此用户暂未设置姓名'}}
+            {{scope.row.name? scope.row.name : '暂未设置'}}
 					</div>
 				</template>
       </el-table-column>
@@ -62,11 +62,11 @@
         <template slot-scope="scope">
         <el-button
           size="mini"
-          @click="handleEdit(scope.$index, scope.row)">查看</el-button>
+          @click="handleEdit(scope.$index, scope.row)">查看订单</el-button>
         <el-button
           size="mini"
-          type="danger"
-          @click="handleDelete(scope.$index, scope.row)">封禁</el-button>
+          :type="scope.row.state ? 'danger' : 'primary'"
+          @click="handleDelete(scope.$index, scope.row)">{{scope.row.state ? '封禁' : '解封'}}</el-button>
       </template>
       </el-table-column>
     </el-table>
@@ -74,7 +74,7 @@
 </template>
 
 <script>
-import { userall } from '@/api/user'
+import { userall,state_user } from '@/api/user'
 export default {
   data() {
     return {
@@ -86,14 +86,26 @@ export default {
      get_alluser() {
        this.listLoading = true
         userall().then(res => {
-          console.log(res.data.data);
-          
           this.allUserData = res.data.data
           setTimeout(() => {
             this.listLoading = false
           },500)
         })
      },
+     //封禁用户,解封
+      handleDelete(index,scope) {
+          state_user(scope.webuser_id).then(res => {
+            this.$message.success(res.data.msg)
+            if(res.data.code === 200) {
+              this.get_alluser()
+            }
+          })
+      },
+      //查看用户订单
+      handleEdit(index,scope) {
+        
+      }
+      
   },
   created() {
     this.get_alluser()

@@ -22,3 +22,13 @@ export function userall() {
     url:'/user/all',
   })
 }
+
+//封禁用户,解封用户
+export function state_user(id) {
+  return request({
+    url:'/user/state',
+    params:{
+      id
+    }
+  })
+}
