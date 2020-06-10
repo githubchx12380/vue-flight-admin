@@ -196,7 +196,16 @@ export const constantRoutes = [
         meta:{
           title:'前台用户',
           name:'user_list'
-        }
+        },
+      },
+      {
+        path:'user_order/:id',
+        component:() => import('@/views/user/index.vue'),
+        meta:{
+          title:'用户订单',
+          name:'user_order'
+        },
+        hidden: true,
       }
     ]
   },

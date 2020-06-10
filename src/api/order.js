@@ -11,3 +11,14 @@ export function get_OrderData(state) {
   })
 }
 
+
+//获取某位用户订单
+export function userItem_order(id) {
+  return request({
+    url:'/order/useritem_order',
+    params:{
+      id
+    }
+  })
+}
+

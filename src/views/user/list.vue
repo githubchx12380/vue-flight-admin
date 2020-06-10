@@ -94,6 +94,11 @@ export default {
      },
      //封禁用户,解封
       handleDelete(index,scope) {
+         /* 权限控制 */
+         if(!this.$store.state.user.roles.includes('admin')) {
+                this.$message.warning('抱歉,您的权限不够!')
+                return
+          }
           state_user(scope.webuser_id).then(res => {
             this.$message.success(res.data.msg)
             if(res.data.code === 200) {
@@ -103,7 +108,12 @@ export default {
       },
       //查看用户订单
       handleEdit(index,scope) {
-        
+        if(!this.$store.state.user.roles.includes('admin')) {
+              this.$message.warning('抱歉,您的权限不够!')
+              return
+        }
+        /* 权限控制 */
+        this.$router.push('/web_user/user_order/' + scope.webuser_id)
       }
       
   },
