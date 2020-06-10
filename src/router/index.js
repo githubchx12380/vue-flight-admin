@@ -194,7 +194,7 @@ export const constantRoutes = [
         path:'list',
         component:() => import('@/views/user/list'),
         meta:{
-          title:'用户列表',
+          title:'前台用户',
           name:'user_list'
         }
       }

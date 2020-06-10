@@ -16,9 +16,9 @@ export function getInfo(token) {
   })
 }
 
-export function logout() {
+//获取全部用户
+export function userall() {
   return request({
-    url: '/vue-element-admin/user/logout',
-    method: 'post'
+    url:'/user/all',
   })
 }
