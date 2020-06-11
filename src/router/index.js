@@ -115,6 +115,24 @@ export const constantRoutes = [
     ]
   },
   {
+    path:'/city',
+    component:Layout,
+    redirect:'noRedirect',
+    name:'city',
+    meta:{
+      title:'城市管理',
+      icon:'list'
+    },
+    children:[
+      {
+        path:'/list',
+        component:() => import('@/views/city'),
+        name:'城市列表',
+        meta:{title:'城市列表'}
+      }
+    ]
+  },
+  {
     path:'/order',
     component:Layout,
     name:'order',

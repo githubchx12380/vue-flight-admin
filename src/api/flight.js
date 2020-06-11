@@ -9,6 +9,15 @@ export function CityList() {
   })
 }
 
+//添加城市
+export function addCity(data) {
+  return request({
+    method:'post',
+    url:'/air/addcity',
+    data
+  })
+}
+
 
 //航班列表
 export function flight_list(params) {
