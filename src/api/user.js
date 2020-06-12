@@ -8,6 +8,7 @@ export function login(data) {
   })
 }
 
+
 export function getInfo(token) {
   return request({
     url: '/user/info',
@@ -31,4 +32,13 @@ export function state_user(id) {
       id
     }
   })
+}
+
+//修改个人资料
+export function update_info(data) {
+    return request({
+      method:'post',
+      url:'/user/update',
+      data
+    })
 }
