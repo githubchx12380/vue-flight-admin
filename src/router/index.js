@@ -228,6 +228,26 @@ export const constantRoutes = [
     ]
   },
   {
+    path:'/web_chat',
+    component:Layout,
+    redirect:'noRedirect',
+    name:'web_chat',
+    meta:{
+      title:'前台消息',
+      icon:'component'
+    },
+    children:[
+      {
+        path:'chat',
+        name:'chat',
+        component:() => import('@/views/chat/index.vue'),
+        meta:{
+          title:'前台消息'
+        }
+      }
+    ]
+  },
+  {
     path: '/profile',
     component: Layout,
     redirect: '/profile/index',

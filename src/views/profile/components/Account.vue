@@ -1,7 +1,12 @@
 <template>
   <el-form>
     <el-form-item label="头像">
-      <upload @headSubmitImg="res => model.img = res" />
+       <el-upload :multiple="true"  :on-success="onSuccess" :action="baseURL" drag>
+          <i class="el-icon-upload" />
+          <div class="el-upload__text">
+            将文件拖到此处，或<em>点击上传</em>
+          </div>
+       </el-upload>
     </el-form-item>
     <el-form-item label="姓名">
       <el-input v-model.trim="user.name" />
@@ -16,28 +21,33 @@
 </template>
 
 <script>
-import Upload from './upload'
+import request from '../../../utils/request'
 import { update_info } from '@/api/user'
-import { getToken } from '@/utils/auth'
 export default {
-  components:{
-    Upload
-  },
-
   props: {
     user: {
       type: Object,
       default: () => {
         return {
           name: '',
-          email: ''
+          email: '',
+          img:''
         }
       }
     }
   },
+  computed:{
+    baseURL() {
+      return request.defaults.baseURL + '/user/upload'
+    },
+  },
   methods: {
+    onSuccess(res) {
+      this.user.img = res.url
+    },
     submit() {
      const {avatar,role,...req} = this.user 
+    
       update_info(req).then(res => {
         if(res.data.code === 200) {
           this.$message({
@@ -45,6 +55,7 @@ export default {
             type: 'success',
             duration: 5 * 1000
           })
+          this.$store.dispatch('user/getInfo')
           this.$router.push('/')
         }
         

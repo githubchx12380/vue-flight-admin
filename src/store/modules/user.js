@@ -58,7 +58,6 @@ const actions = {
         if (!data) {
           reject('Verification failed, please Login again.')
         }
-        console.log(data);
         
         const { roles, name, avatar, introduction,email } = data
         

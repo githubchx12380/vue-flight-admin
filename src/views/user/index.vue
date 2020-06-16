@@ -8,6 +8,8 @@
 import { mapGetters } from 'vuex'
 import adminUserOrder from './admin/user_order'
 import editorUserOrder from './editor/index'
+import { now,line } from '../../socket'
+import { getToken } from '../../api/qiniu'
 export default {
     data() {
         return {
@@ -29,7 +31,8 @@ export default {
             
             this.current = 'editorUserOrder'
         }
-    }
+        
+    },
 }
 </script>
 

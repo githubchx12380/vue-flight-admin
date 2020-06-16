@@ -44,7 +44,9 @@ export default {
     },
     created() {
         this.get_vacation()
-    }
+    },
+  
+    
 }
 </script>
 
