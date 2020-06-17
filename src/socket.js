@@ -8,6 +8,12 @@ export const  now = (info) => {
 export const line = (info) => {
     socket.emit('line',{msg:'在线',...info,stateAdmin:'admin'})
 }
+
+export const emitContent = (value) => {
+    socket.emit('UseremitContent',{value,id})
+} 
+
+
 socket.on('webMsg',data => {
-    store.commit('chat/ADD_MSG',data)
+    store.dispatch('chat/ADD_MSG',data)
 })

@@ -3,50 +3,41 @@
       <el-row>
         <el-col :span="6" class="left">
           <h3>用户列表</h3>
-          <div class="user">
-            <img src="http://k1998.xyz:3000/images/avatar01.jpg" alt="">
-            <p>哈哈怪</p>
+          <div @click="currentKey = key" class="user" v-for="(item,key,index) in Msg" :key="index">
+            <img v-if="item[0].head_img" :src="baseURL + item[0].head_img" alt="">
+            <img v-else src="http://k1998.xyz:3000/images/avatar01.jpg" alt="">
+            <p :class="currentKey === key && 'active' ">{{key}}</p>
           </div>
-          <div class="user">
-            <img src="http://k1998.xyz:3000/images/avatar01.jpg" alt="">
-            <p>哈哈怪</p>
-          </div>
-          <div class="user">
-            <img src="http://k1998.xyz:3000/images/avatar01.jpg" alt="">
-            <p>哈哈怪</p>
-          </div>
+          
         </el-col>
         <el-col :span="18" class="right">
-          <h3>聊天室</h3>
+          <h3>前台消息</h3>
           <div class="content">
-            <div class="content_item_left">
-              <img src="http://k1998.xyz:3000/images/avatar01.jpg" alt="">
-              <div>
-                <p>今天在干嘛呢</p>
+            <div v-for="(item,index) in Msg[currentKey]" :key="index">
+                <div  v-if="item.webuser_id" class="content_item_left">
+                <img v-if="Msg[currentKey][0].head_img" :src="baseURL + Msg[currentKey][0].head_img" alt="">
+                <img v-else src="http://k1998.xyz:3000/images/avatar01.jpg" alt="">
+                <div>
+                  <p>{{item.value}}</p>
+                </div>
               </div>
-            </div>
-            <div class="content_item_right">
-              <div>
-               
+              <div v-else class="content_item_right">
+                <div>
+                </div>
+                <p>{{item.value}}</p>
+                 <img v-if="Msg[currentKey][0].head_img"  :src="baseURL + Msg[currentKey][0].head_img" alt="">
+                 <img v-else src="http://k1998.xyz:3000/images/avatar01.jpg" alt="">
               </div>
-               <p>今天在干嘛呢</p>
-              <img src="http://k1998.xyz:3000/images/avatar01.jpg" alt="">
-            </div>
-            <div class="content_item_right">
-              <div>
-               
-              </div>
-               <p>今天在干嘛呢</p>
-              <img src="http://k1998.xyz:3000/images/avatar01.jpg" alt="">
             </div>
           </div>
           <div class="text_box">
             <div class="biaoq"></div>
-            <div class="text" contenteditable>
-             
-            </div>
+              <textarea class="text" v-model="value" contenteditable>
+              </textarea>
           </div>
+            <el-button class="submits" @click="MsgSubmit">发送</el-button>
         </el-col>
+        <div style="display:none">{{userlist}}</div>
       </el-row>
   </div>
 </template>
@@ -55,18 +46,41 @@
 import { now, line } from '../../socket'
 import { getToken } from '../../utils/auth'
 import { mapGetters } from 'vuex'
+import { imgURL as baseRUL } from '../../utils/imgUrl'
 export default {
+    data() {
+      return {
+        value:'',
+        currentKey:'123456',
+      }
+    },
     computed:{
+      userlist() {
+        return 1
+      },
+      baseURL() {
+        return baseRUL
+      },
       ...mapGetters([
-        'name'
-      ])
+        'name',
+        'Msg'
+      ]),
+      
+    },
+    
+    methods:{
+      MsgSubmit() {
+      }
     },
     mounted() {
+      
         now({id:getToken(),name:this.name})
     },
     beforeDestroy() {
         line({id:getToken(),name:this.name})
-    }
+    },
+    
+    
 }
 </script>
 
@@ -86,6 +100,11 @@ export default {
       &:hover{
         color: #42b983;
       }
+      p {
+        &.active{
+          color:#42b983 ;
+        }
+      }
       img{
         width: 40px;
         height: 40px;
@@ -98,6 +117,11 @@ export default {
     background-color: #eeeeee;
     height: 80vh;
     position: relative;
+    .submits{
+      position: absolute;
+      right: 20px;
+      bottom: 20px;
+    }
     h3{
       padding-bottom: 15px;
       font-weight: 400;
@@ -155,7 +179,11 @@ export default {
         border-bottom: 1px solid rgb(204, 204, 204);
       }
       .text{
-        height: 100%;
+        border:0;
+        background-color: #eeeeee;
+        height: 130px;
+        width: 100%;
+        outline: none
       }
     }
   }

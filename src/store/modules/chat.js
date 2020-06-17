@@ -1,27 +1,25 @@
 const state = {
-    logs: []
+    Msg: {}
   }
   
   const mutations = {
-    ADD_MSG: (state, data) => {
-        console.log(state);
-        console.log(data);
-        
-        let obj = []
-        
-    //  state.push({
-    //      [data.webuser_id]:[data]
-    //  })
-    //  console.log(state);
-     
-    },
-    CLEAR_ERROR_LOG: (state) => {
-      state.logs.splice(0)
+  
+    Add_MSG_MATA: (state,data) => {
+      state.Msg = data
     }
   }
   
   const actions = {
-  
+    ADD_MSG: ({state,commit}, data) => {
+        if(state.Msg[data.username]) {
+            state.Msg[data.username].push(data)
+            commit('Add_MSG_MATA',JSON.parse(JSON.stringify(state.Msg)))
+            return
+        }
+        state.Msg[data.username] = [data]
+        commit('Add_MSG_MATA',JSON.parse(JSON.stringify(state.Msg)))
+        
+    },
   }
   
   export default {
