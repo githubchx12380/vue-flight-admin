@@ -78,7 +78,6 @@ export default {
     color: white;
     padding: 0 20px;
     height: 80vh;
-
     .user{
       display: flex;
       align-items: center;
