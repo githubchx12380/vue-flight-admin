@@ -9,8 +9,8 @@ export const line = (info) => {
     socket.emit('line',{msg:'在线',...info,stateAdmin:'admin'})
 }
 
-export const emitContent = (value) => {
-    socket.emit('UseremitContent',{value,id})
+export const emitContent = (obj) => {
+    socket.emit('UseremitContent',obj)
 } 
 
 

@@ -25,8 +25,7 @@
                 <div>
                 </div>
                 <p>{{item.value}}</p>
-                 <img v-if="Msg[currentKey][0].head_img"  :src="baseURL + Msg[currentKey][0].head_img" alt="">
-                 <img v-else src="http://k1998.xyz:3000/images/avatar01.jpg" alt="">
+                 <img :src="avatar" alt="">
               </div>
             </div>
           </div>
@@ -38,12 +37,13 @@
             <el-button class="submits" @click="MsgSubmit">发送</el-button>
         </el-col>
         <div style="display:none">{{userlist}}</div>
+        
       </el-row>
   </div>
 </template>
 
 <script>
-import { now, line } from '../../socket'
+import { now, line,emitContent } from '../../socket'
 import { getToken } from '../../utils/auth'
 import { mapGetters } from 'vuex'
 import { imgURL as baseRUL } from '../../utils/imgUrl'
@@ -51,11 +51,14 @@ export default {
     data() {
       return {
         value:'',
-        currentKey:'123456',
+        currentKey:'',
       }
     },
     computed:{
       userlist() {
+        if(Object.keys(this.Msg).length === 1) {
+          this.currentKey = Object.keys(this.Msg)[0]
+        }
         return 1
       },
       baseURL() {
@@ -63,13 +66,28 @@ export default {
       },
       ...mapGetters([
         'name',
-        'Msg'
+        'Msg',
+        'avatar'
       ]),
       
     },
     
     methods:{
       MsgSubmit() {
+        if(!Object.keys(this.Msg).length){
+          this.$message('请选择需要回复的用户')
+          return
+        }
+        let web_id = this.Msg[this.currentKey][0].webuser_id
+        let obj = {
+          name:this.name,
+          value:this.value,
+          web_id:web_id,
+          stateAdmin:'admin',
+          username:this.currentKey
+        }
+        emitContent(obj)
+        this.value = ''
       }
     },
     mounted() {
@@ -79,7 +97,14 @@ export default {
     beforeDestroy() {
         line({id:getToken(),name:this.name})
     },
-    
+    watch:{
+      Msg:{
+        handler() {
+          
+        },
+        deep:true
+      }
+    }    
     
 }
 </script>
