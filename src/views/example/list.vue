@@ -85,7 +85,7 @@ export default {
     }
   },
   created() {
-    this.getList() m
+    this.getList()
   },
   methods: {
     getList() {

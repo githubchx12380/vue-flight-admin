@@ -42,3 +42,15 @@ export function update_info(data) {
       data
     })
 }
+
+
+//查看管理员
+export function get_admininfo(role) {
+  return request({
+    method:'get',
+    url:'/user/admins',
+    params:{
+      role
+    }
+  })
+}
